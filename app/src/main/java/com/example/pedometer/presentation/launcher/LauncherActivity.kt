@@ -6,7 +6,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.pedometer.R
@@ -22,41 +21,40 @@ class LauncherActivity : DaggerAppCompatActivity(), SensorEventListener {
 
     private lateinit var activityLauncherBinding: ActivityLauncherBinding
     private lateinit var launcherViewModel: LauncherViewModel
-    var running = false
-    private var sensorManager: SensorManager? = null
+    private lateinit var sensorManager: SensorManager
+    private lateinit var mGravity: Sensor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityLauncherBinding = DataBindingUtil.setContentView(this, R.layout.activity_launcher)
         launcherViewModel = provideActivityViewModelProvider(viewModelProvider)
+
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
+        //gravity sensor
+        mGravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
     }
 
-    override fun onResume() {
-        super.onResume()
-        running = true
-        val stepsSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-        if (stepsSensor == null) {
-            Toast.makeText(this, "sensor not found", Toast.LENGTH_SHORT).show()
-        } else {
-            sensorManager?.registerListener(this, stepsSensor, SensorManager.SENSOR_DELAY_NORMAL)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        running = false
-        sensorManager?.unregisterListener(this)
-    }
-
-    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+        //If sensor accuracy changes.
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-        if (running) {
-            activityLauncherBinding.tvSteps.text = "${event.values[0]}"
+        //If there is a new sensor data
+        activityLauncherBinding.tvStepsCount.text = "${event.values[0]}"
+    }
+
+    //register
+    override fun onResume() {
+        super.onResume()
+        mGravity.also { gravity ->
+            sensorManager.registerListener(this, gravity, SensorManager.SENSOR_DELAY_NORMAL)
         }
+    }
+
+    //unregister
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
     }
 }

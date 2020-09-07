@@ -20,27 +20,39 @@
             android:id="@+id/tv_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:layout_marginTop="92dp"
-            android:layout_marginEnd="@dimen/_8dp"
+            android:layout_marginTop="188dp"
             android:text="Steps"
+            android:textColor="@color/pure_black"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_steps"
+            android:id="@+id/tv_steps_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8dp"
-            android:layout_marginTop="@dimen/_48dp"
-            android:layout_marginEnd="@dimen/_8dp"
-            android:text="0"
-            android:textSize="35sp"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/pure_black"
+            android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_step" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_step"
+            tools:text="12" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_steps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_steps_count"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_steps" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
