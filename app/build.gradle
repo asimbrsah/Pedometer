@@ -1,0 +1,95 @@
+apply plugin: 'com.android.application'
+
+// kotlin
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+/**Loading store property file */
+def storePropertiesFile = rootProject.file("store.properties")
+def storeProperties = new Properties()
+storeProperties.load(new FileInputStream(storePropertiesFile))
+
+android {
+    compileSdkVersion targetSdkVer
+    buildToolsVersion buildToolsVer
+
+    signingConfigs {
+        release {
+            storeFile file(storeProperties['prod_key_store_certificate'])
+            storePassword storeProperties['prod_key_store_password']
+            keyAlias storeProperties['prod_key_alias']
+            keyPassword storeProperties['prod_key_password']
+        }
+    }
+
+    defaultConfig {
+        applicationId packageName
+        // Defines the minimum API level required to run the app.
+        minSdkVersion minSdkVer
+        // Specifies the API level used to test the app.
+        targetSdkVersion targetSdkVer
+        // Defines the version number of your app.
+        versionCode appVerCode
+        // Defines a user-friendly version name for your app.
+        versionName appVerName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+        }
+        release {
+            debuggable false
+            // Optimize app size
+            minifyEnabled true
+            shrinkResources true
+            // For better optimization enable proguard
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    // Data binding
+    buildFeatures {
+        dataBinding true
+    }
+
+    // Using Java 8
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    // kotlin core
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinLibVersion}"
+    implementation "androidx.core:core-ktx:${kotlinCoreVersion}"
+
+    // Support Library
+    implementation "androidx.appcompat:appcompat:${supportLibraryVer}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayoutVer}"
+    implementation "com.google.android.material:material:${materialVer}"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-common-java8:${lifecycleVersion}"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:${lifecycleVersion}"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${daggerVer}"
+    kapt "com.google.dagger:dagger-compiler:${daggerVer}"
+    implementation "com.google.dagger:dagger-android:${daggerVer}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVer}"
+    kapt "com.google.dagger:dagger-android-processor:${daggerVer}"
+}

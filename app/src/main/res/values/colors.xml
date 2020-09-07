@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/navy_blue</color>
+    <color name="colorPrimaryDark">@color/navy_blue_dark</color>
+    <color name="colorAccent">@color/orange</color>
+
+    // Branding color
+    <color name="navy_blue">#214258</color>
+    <color name="navy_blue_dark">#1C3A4E</color>
+    <color name="orange">#F06423</color>
+
+    // Other color used in app
+    <color name="pure_white">@android:color/white</color>
+    <color name="pure_black">@android:color/black</color>
+
+</resources>
