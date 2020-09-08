@@ -1,7 +1,7 @@
 package com.example.pedometer.di
 
-import com.example.pedometer.presentation.launcher.LauncherActivity
-import com.example.pedometer.presentation.launcher.LauncherModule
+import com.example.pedometer.presentation.sensor.SensorActivity
+import com.example.pedometer.presentation.sensor.SensorModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -11,8 +11,8 @@ abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(
         modules = [
-            LauncherModule::class
+            SensorModule::class
         ]
     )
-    abstract fun contributeLauncherActivity(): LauncherActivity
+    abstract fun contributeLauncherActivity(): SensorActivity
 }

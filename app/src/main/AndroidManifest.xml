@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.pedometer">
 
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
@@ -15,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".presentation.launcher.LauncherActivity">
+        <activity android:name=".presentation.sensor.SensorActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

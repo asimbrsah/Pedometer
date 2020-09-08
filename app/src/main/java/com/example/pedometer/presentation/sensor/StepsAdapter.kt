@@ -1,4 +1,4 @@
-package com.example.pedometer.presentation.launcher
+package com.example.pedometer.presentation.sensor
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
